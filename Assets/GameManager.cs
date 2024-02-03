@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform paddle1Transform;
     [SerializeField] private Transform paddle2Transform;
     [SerializeField] private Transform ballTransform;
+    [SerializeField] private TextMeshProUGUI ballSpeed;
+
 
     private int gamer1score;
     private int gamer2score;
+    private int h = 0;
 
 
 
@@ -39,6 +42,12 @@ public class GameManager : MonoBehaviour
     {
         gamer2score++;
         gamer2scoreText.text = gamer2score.ToString();
+    }
+
+    public void UpdateSpeed()
+    {
+        h++;
+        ballSpeed.text = h.ToString();
     }
 
     public void Reinicio()

@@ -44,9 +44,15 @@ public class Ball : MonoBehaviour
 
     private void onCollisionEnter2D(Collision2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Paddle"))
         {
+            GameManager.Instance.UpdateSpeed();
             ballRb.velocity *= velocityMultiplier;         
+        }
+        else if (collision.gameObject.CompareTag("Pared"))
+        {
+            GameManager.Instance.UpdateSpeed();
         }
     }
 
