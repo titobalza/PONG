@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    [SerializeField] public float spd = 8f;
+    [SerializeField] public float spd = 12f;
     [SerializeField] private bool isPaddle1;
     public float ybound = 0.2f;
     
