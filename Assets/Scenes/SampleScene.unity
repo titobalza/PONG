@@ -1516,6 +1516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialVelocity: 6
   velocityMultiplier: 1.1
+  hitCountToDuplicate: 7
 --- !u!1 &1551841383
 GameObject:
   m_ObjectHideFlags: 0
