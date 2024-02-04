@@ -10,19 +10,23 @@ public class Ball : MonoBehaviour
     private int currentHitCount = 0;
 
     private Rigidbody2D ballRb;
-
+    private Camera mainCamera;
 
     void Start()
     {
         ballRb = GetComponent<Rigidbody2D>();
+        mainCamera = Camera.main;
         Launch();
     }
 
     private void Launch()
     {
-        float xVelocity = Random.Range(0, 2) == 0 ? -1 : 1;
-        float yVelocity = Random.Range(0, 2) == 0 ? -1 : 1;
-        ballRb.velocity = new Vector2(xVelocity, yVelocity) * initialVelocity;
+        if (ballRb != null)
+        {
+            float xVelocity = Random.Range(0, 2) == 0 ? -1 : 1;
+            float yVelocity = Random.Range(0, 2) == 0 ? -1 : 1;
+            ballRb.velocity = new Vector2(xVelocity, yVelocity) * initialVelocity;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,6 +39,7 @@ public class Ball : MonoBehaviour
             {
                 currentHitCount = 0;
                 DuplicateBall();
+                ChangeBackgroundColor();
             }
         }
     }
@@ -61,9 +66,19 @@ public class Ball : MonoBehaviour
     {
         GameObject newBall = Instantiate(gameObject, transform.position, Quaternion.identity);
         Ball newBallComponent = newBall.GetComponent<Ball>();
+        newBallComponent.ballRb = newBall.GetComponent<Rigidbody2D>(); // Assign the ballRb reference to the new ball
+        newBallComponent.mainCamera = mainCamera;
         newBallComponent.Launch();
     }
-    
+
+    private void ChangeBackgroundColor()
+    {
+        float r = Random.value;
+        float g = Random.value;
+        float b = Random.value;
+        Color randomColor = new Color(r, g, b);
+        mainCamera.backgroundColor = randomColor;
+    }
 
     private void DestroyDuplicateBalls()
     {
