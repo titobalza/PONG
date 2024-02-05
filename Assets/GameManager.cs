@@ -31,16 +31,28 @@ public class GameManager : MonoBehaviour
     }
 
     public void GolIzq()
+{
+    gamer1score++;
+    gamer1scoreText.text = gamer1score.ToString();
+    if (gamer1score >= 5)
     {
-        gamer1score++;
-        gamer1scoreText.text = gamer1score.ToString();
-    }
-    public void GolDer()
+        gamer1scoreText.text = "Winner" ;
+        RestartGame();
+        
+}
+}
+public void GolDer()
+{
+    gamer2score++;
+    gamer2scoreText.text = gamer2score.ToString();
+    if (gamer2score >= 5)
     {
-        gamer2score++;
-        gamer2scoreText.text = gamer2score.ToString();
+       gamer2scoreText.text = "Winner";
+       RestartGame();
+       
+       
     }
-
+}
   public void Reinicio()
 {
     paddle1Transform.position = new Vector2(paddle1Transform.position.x, 0);
@@ -54,5 +66,13 @@ public class GameManager : MonoBehaviour
         if (ballRb != null)
             ballRb.velocity = Vector2.zero;
     }
+}
+private void RestartGame()
+{
+
+    gamer1score = 0;
+    gamer2score = 0;
+    gamer1scoreText.text = "0";
+    gamer2scoreText.text = "0";
 }
 }
