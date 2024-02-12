@@ -11,11 +11,16 @@ public class Ball : MonoBehaviour
 
     private Rigidbody2D ballRb;
     private Camera mainCamera;
+    private AudioSource audioSource;
 
-    void Start()
+    public float initialPitch = 1f;
+
+    private void Start()
     {
         ballRb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        audioSource = GetComponent<AudioSource>();
+
         Launch();
     }
 
@@ -26,6 +31,11 @@ public class Ball : MonoBehaviour
             float xVelocity = Random.Range(0, 2) == 0 ? -1 : 1;
             float yVelocity = Random.Range(0, 2) == 0 ? -1 : 1;
             ballRb.velocity = new Vector2(xVelocity, yVelocity) * initialVelocity;
+
+            if (audioSource != null)
+            {
+                audioSource.pitch = initialPitch;
+            }
         }
     }
 
@@ -34,7 +44,14 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Paddle"))
         {
             ballRb.velocity *= velocityMultiplier;
+
+            if (audioSource != null)
+            {
+                audioSource.pitch *= velocityMultiplier;
+            }
+
             currentHitCount++;
+
             if (currentHitCount >= hitCountToDuplicate)
             {
                 currentHitCount = 0;
@@ -66,9 +83,13 @@ public class Ball : MonoBehaviour
     {
         GameObject newBall = Instantiate(gameObject, transform.position, Quaternion.identity);
         Ball newBallComponent = newBall.GetComponent<Ball>();
-        newBallComponent.ballRb = newBall.GetComponent<Rigidbody2D>(); // Assign the ballRb reference to the new ball
-        newBallComponent.mainCamera = mainCamera;
-        newBallComponent.Launch();
+
+        if (newBallComponent != null)
+        {
+            newBallComponent.ballRb = newBall.GetComponent<Rigidbody2D>();
+            newBallComponent.mainCamera = mainCamera;
+            newBallComponent.Launch();
+        }
     }
 
     private void ChangeBackgroundColor()
