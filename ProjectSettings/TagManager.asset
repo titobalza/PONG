@@ -8,6 +8,8 @@ TagManager:
   - Goal1
   - Goal2
   - 'invertedControlsMessage '
+  - Pared
+  - GoalSound
   layers:
   - Default
   - TransparentFX

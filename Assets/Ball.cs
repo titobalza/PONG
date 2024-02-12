@@ -2,24 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Ball : MonoBehaviour
 {
     [SerializeField] private float initialVelocity = 7f;
     [SerializeField] private float velocityMultiplier = 1.20f;
     [SerializeField] private int hitCountToDuplicate = 7;
     private int currentHitCount = 0;
-
+ 
     private Rigidbody2D ballRb;
     private Camera mainCamera;
     private AudioSource audioSource;
 
     public float initialPitch = 1f;
 
+    // Las variables para los sonidos de gol
+    public AudioSource goalSound;
+
     private void Start()
     {
         ballRb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
         audioSource = GetComponent<AudioSource>();
+
+        // Obtener los componentes de AudioSource de los objetos GoalSound y GoalSound
+        goalSound = FindObjectOfType<GoalSound>().GetComponent<AudioSource>();
+        goalSound = FindObjectOfType<GoalSound>().GetComponent<AudioSource>();
 
         Launch();
     }
@@ -69,6 +77,9 @@ public class Ball : MonoBehaviour
             GameManager.Instance.Reinicio();
             DestroyDuplicateBalls();
             Launch();
+
+            // Reproducir el sonido de gol de GoalSound
+            goalSound.Play();
         }
         else if (collision.gameObject.CompareTag("Goal2"))
         {
@@ -76,6 +87,9 @@ public class Ball : MonoBehaviour
             GameManager.Instance.Reinicio();
             DestroyDuplicateBalls();
             Launch();
+
+            // Reproducir el sonido de gol de goalSound
+            goalSound.Play();
         }
     }
 
